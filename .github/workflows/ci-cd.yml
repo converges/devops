@@ -70,7 +70,6 @@ jobs:
     - name: Unit Tests
       run: |
         gcc -o unit_test tests/unit_test.c src/myapp.c && ./unit_test
-        ./unit_test
 
     - name: Functional Tests
       run: bash ./tests/functional_test.sh
