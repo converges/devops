@@ -1,0 +1,27 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build C Program
+        run: gcc -o myprogram src/hello.c
+      - name: Run Tests
+        run: ./test-script.sh
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Server
+        run: scp myprogram user@server:/path/to/deploy
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
