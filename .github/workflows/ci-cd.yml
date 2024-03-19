@@ -47,7 +47,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: analysis_results
-        path: ./analysis/all_results.txt
+        path: ./analysis/myapp_analysis.txt
 
   testing:
     needs: build
@@ -68,8 +68,7 @@ jobs:
         path: ./myapp
 
     - name: Unit Tests
-      run: |
-        gcc -o unit_test tests/unit_test.c src/myapp.c && ./unit_test
+      run: gcc -o unit_test -DUNIT_TEST tests/unit_test.c src/myapp.c && ./unit_test
 
     - name: Functional Tests
       run: bash ./tests/functional_test.sh
@@ -97,22 +96,22 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: testing_report
-        path: reports/testing_report.txt
+        path: reports/myapp_testing.txt
 
     - name: Download analysis artifacts
       uses: actions/download-artifact@v2
       with:
         name: analysis_report
-        path: reports/analysis_report.txt
+        path: reports/myapp_analysis.txt
 
     - name: Convert testing report to HTML
-      run: pandoc -f markdown -t html -o reports/testing_report.html reports/testing_report.txt
+      run: pandoc -f markdown -t html -o reports/myapp_testing.html reports/myapp_testing.txt
 
     - name: Convert analysis report to HTML
-      run: pandoc -f markdown -t html -o reports/analysis_report.html reports/analysis_report.txt
+      run: pandoc -f markdown -t html -o reports/myapp_analysis.html reports/myapp_analysis.txt
 
     - name: Merge reports
-      run: cat reports/testing_report.html reports/analysis_report.html > reports/myapp_report.html
+      run: cat reports/myapp_testing.html reports/myapp_analysis.html > reports/myapp_report.html
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
