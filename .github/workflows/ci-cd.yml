@@ -60,6 +60,7 @@ jobs:
       run: |
         sudo apt-get install -y gcc make check
 
+
     - name: Download myapp
       uses: actions/download-artifact@v2
       with:
@@ -68,7 +69,7 @@ jobs:
 
     - name: Unit Tests
       run: |
-        gcc -o unit_test tests/unit_test.c
+        gcc -o unit_test tests/unit_test.c src/myapp.c && ./unit_test
         ./unit_test
 
     - name: Functional Tests
