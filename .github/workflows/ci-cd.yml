@@ -68,7 +68,7 @@ jobs:
         path: ./myapp
 
     - name: Unit Tests
-      run: gcc -o unit_test -DUNIT_TEST tests/unit_test.c src/myapp.c && ./unit_test
+      run: bash ./tests/unit_test.sh
 
     - name: Functional Tests
       run: bash ./tests/functional_test.sh
