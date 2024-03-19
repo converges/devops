@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "------------------------------------" >> reports/myapp_testing.txt
 # 테스트 케이스: add 함수
 declare -a add_tests=(
   "2 3 5"
@@ -12,9 +13,9 @@ for i in "${add_tests[@]}"; do
   expected="${params[2]}"
 
   if [ "$result" == "$expected" ]; then
-    echo "Add Test Passed: ${params[0]} + ${params[1]} = $expected"
+    echo "Add Test Passed: ${params[0]} + ${params[1]} = $expected" >> reports/myapp_testing.txt
   else
-    echo "Add Test Failed: Expected $expected, got $result"
+    echo "Add Test Failed: Expected $expected, got $result" >> reports/myapp_testing.txt
   fi
 done
 
@@ -30,8 +31,8 @@ for i in "${sub_tests[@]}"; do
   expected="${params[2]}"
 
   if [ "$result" == "$expected" ]; then
-    echo "Sub Test Passed: ${params[0]} - ${params[1]} = $expected"
+    echo "Sub Test Passed: ${params[0]} - ${params[1]} = $expected" >> reports/myapp_testing.txt
   else
-    echo "Sub Test Failed: Expected $expected, got $result"
+    echo "Sub Test Failed: Expected $expected, got $result" >> reports/myapp_testing.txt
   fi
 done

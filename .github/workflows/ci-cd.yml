@@ -23,6 +23,28 @@ jobs:
         name: myapp
         path: ./myapp
 
+  analysis:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download myapp
+      uses: actions/download-artifact@v2
+      with:
+        name: myapp
+        path: ./myapp
+
+    - name: Analyze myapp.c
+      run: bash ./analysis/myapp_analyze.sh
+
+    - name: Upload analysis results
+      uses: actions/upload-artifact@v2
+      with:
+        name: analysis_results
+        path: ./analysis/all_results.txt
+
   testing:
     needs: build
     runs-on: ubuntu-latest
@@ -39,6 +61,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: myapp
+        path: ./myapp
 
     - name: Unit Tests
       run: |
@@ -52,7 +75,65 @@ jobs:
       run: bash ./tests/integration_test.sh
     
     - name: System Tests
-      run: bash ./tests/system_tests.sh
+      run: bash ./tests/system_test.sh
     
     - name: Performance Tests
-      run: ./scripts/run_performance_tests.sh # 성능 테스트 스크립트 실행 예시
+      run: bash ./tests/performance_test.sh
+  
+  reports:
+    needs:
+      - build
+      - analysis
+      - testing
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download testing artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: testing_report
+        path: reports/testing_report.txt
+
+    - name: Download analysis artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: analysis_report
+        path: reports/analysis_report.txt
+
+    - name: Convert testing report to HTML
+      run: pandoc -f markdown -t html -o reports/testing_report.html reports/testing_report.txt
+
+    - name: Convert analysis report to HTML
+      run: pandoc -f markdown -t html -o reports/analysis_report.html reports/analysis_report.txt
+
+    - name: Merge reports
+      run: cat reports/testing_report.html reports/analysis_report.html > reports/myapp_report.html
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: myapp_reports
+        path: reports/myapp_report.html
+
+  deploy:
+    needs: reports
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+
+
+  merge:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Merge to main
+      run: |
+        git checkout main
+        git merge $GITHUB_SHA
+        git push origin main
