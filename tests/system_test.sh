@@ -1,17 +1,18 @@
 #!/bin/bash
 
-REPORT_FILE_PATH="reports/myapp_testing.md"
+REPORT_FILE_PATH="reports/system_tests.html"
 
-echo "------------------------------------" >> $REPORT_FILE_PATH
-echo "Running System Tests..." >> $REPORT_FILE_PATH
+echo "<html><head><title>System Tests Report</title></head><body>" > $REPORT_FILE_PATH
+echo "<h1>System Tests Report</h1>" >> $REPORT_FILE_PATH
+echo "<ul>" >> $REPORT_FILE_PATH
 
 ../src/myapp
 
-if [ $? -eq 0 ]
-then
-  echo "myapp runs successfully." >> $REPORT_FILE_PATH
+if [ $? -eq 0 ]; then
+  echo "<li>myapp runs successfully.</li>" >> $REPORT_FILE_PATH
 else
-  echo "myapp occurs an error." >> $REPORT_FILE_PATH
+  echo "<li>myapp occurs an error.</li>" >> $REPORT_FILE_PATH
 fi
 
-echo "System Tests Completed." >> $REPORT_FILE_PATH
+echo "</ul>" >> $REPORT_FILE_PATH
+echo "</body></html>" >> $REPORT_FILE_PATH
