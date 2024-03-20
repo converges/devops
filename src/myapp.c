@@ -1,8 +1,11 @@
-#include "myapp.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+int add(int, int);
+int sub(int, int);
+
 int main(int argc, char *argv[]) {
+
     if (argc < 4) {
         printf("Usage: %s add|sub num1 num2\n", argv[0]);
         return 1;
@@ -23,4 +26,12 @@ int main(int argc, char *argv[]) {
 
     printf("%d\n", result);
     return 0;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int sub(int a, int b) {
+    return add(a, -b);
 }
