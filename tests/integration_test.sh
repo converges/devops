@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 상수로 분리된 파일 경로
-REPORT_FILE_PATH="./reports/myapp_testing.txt"
+REPORT_FILE_PATH="reports/myapp_testing.txt"
 
 # 파일에 테스트 구분자 추가
 echo "------------------------------------" >> $REPORT_FILE_PATH

@@ -68,6 +68,9 @@ jobs:
     - name: Set executable permissions for myapp
       run: chmod +x myapp
 
+    - name: Create reports directory
+      run: mkdir -p reports
+
     - name: Unit Tests
       run: bash ./tests/unit_test.sh
       working-directory: ./

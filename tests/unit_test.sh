@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPORT_FILE_PATH="./reports/myapp_testing.txt"
+REPORT_FILE_PATH="../reports/myapp_testing.txt"
 
 echo "------------------------------------" > $REPORT_FILE_PATH
 echo "Running Unit Tests..." >> $REPORT_FILE_PATH
