@@ -4,29 +4,20 @@
 int add(int, int);
 int sub(int, int);
 
-int main(int argc, char *argv[]) {
+int main(void) {
 
-    if (argc < 4) {
-        printf("Usage: %s add|sub num1 num2\n", argv[0]);
-        return 1;
-    }
+    int num1 = 10, num2 = 20;
+    int add_result, sub_result;
 
-    int result = 0;
-    int num1 = atoi(argv[2]);
-    int num2 = atoi(argv[3]);
+    add_result = add(num1, num2);
+    sub_result = sub(num1, num2);
 
-    if (strcmp(argv[1], "add") == 0) {
-        result = add(num1, num2);
-    } else if (strcmp(argv[1], "sub") == 0) {
-        result = sub(num1, num2);
-    } else {
-        printf("Invalid operation\n");
-        return 1;
-    }
-
-    printf("%d\n", result);
+    printf("Sum: %d\n", add_result);
+    printf("Diff: %d\n", sub_result);
+    
     return 0;
 }
+
 
 int add(int a, int b) {
     return a + b;
