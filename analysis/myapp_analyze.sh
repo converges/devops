@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPORT_FILE_PATH="./reports/myapp_analysis.txt"
+REPORT_FILE_PATH="./reports/myapp_analysis.md"
 
 # 파일 초기화
 > $REPORT_FILE_PATH

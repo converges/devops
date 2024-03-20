@@ -47,7 +47,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: analysis_report
-        path: ./reports/myapp_analysis.txt
+        path: ./reports/myapp_analysis.md
 
   testing:
     needs: build
@@ -95,7 +95,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: testing_report
-        path: ./reports/myapp_testing.txt
+        path: ./reports/myapp_testing.md
 
   
   reports:
@@ -112,19 +112,19 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: testing_report
-        path: reports/myapp_testing.txt
+        path: reports/myapp_testing.md
 
     - name: Download analysis artifacts
       uses: actions/download-artifact@v2
       with:
         name: analysis_report
-        path: reports/myapp_analysis.txt
+        path: reports/myapp_analysis.md
 
     - name: Convert testing report to HTML
-      run: pandoc -f markdown -t html -o reports/myapp_testing.html reports/myapp_testing.txt
+      run: pandoc -f markdown -t html -o reports/myapp_testing.html reports/myapp_testing.md
 
     - name: Convert analysis report to HTML
-      run: pandoc -f markdown -t html -o reports/myapp_analysis.html reports/myapp_analysis.txt
+      run: pandoc -f markdown -t html -o reports/myapp_analysis.html reports/myapp_analysis.md
 
     - name: Merge reports
       run: cat reports/myapp_testing.html reports/myapp_analysis.html > reports/myapp_report.html
