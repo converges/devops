@@ -43,11 +43,11 @@ jobs:
     - name: Analyze myapp.c
       run: bash ./analysis/myapp_analyze.sh
 
-    - name: Upload analysis results
+    - name: Upload analysis report
       uses: actions/upload-artifact@v2
       with:
-        name: analysis_results
-        path: ./analysis/myapp_analysis.txt
+        name: analysis_report
+        path: ./reports/myapp_analysis.txt
 
   testing:
     needs: build
@@ -90,6 +90,12 @@ jobs:
     - name: Performance Tests
       run: bash ./tests/performance_test.sh
       working-directory: ./
+
+    - name: Upload testing reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: testing_report
+        path: ./reports/myapp_testing.txt
 
   
   reports:
